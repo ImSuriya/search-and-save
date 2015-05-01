@@ -1,1 +1,1 @@
-web: getTweets.js
+web: node getTweets.js
