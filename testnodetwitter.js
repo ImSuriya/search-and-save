@@ -1,23 +1,20 @@
-var util = require('util'),
-    twitter = require('twitter');
+var twitter = require('twitter')
+  , env = require('./env.js')
 
 
-var databaseUrl = "tweet-collector";
-var collections = ["tweets"];
-var db = require("mongojs").connect(databaseUrl, collections);
+var client = new twitter({
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token_key: process.env.ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+})
 
-
-var twit = new twitter({
-
-    // consumer_key: //add yours,
-    // consumer_secret: //add yours,
-    // access_token_key: //add yours,
-    // access_token_secret: //add yours
-});
-
-twit.stream('statuses/filter', {track: ['good day']}, function(stream) {
-	console.log('This is working');
+client.stream('statuses/filter', {track: '#talkpay'}, function(stream) {
     stream.on('data', function(data) {
-        db.tweets.insert(data);
-    });
-});
+      console.log(data.text)
+    })
+
+    stream.on('error', function(err) {
+      throw(err)
+    })
+})
