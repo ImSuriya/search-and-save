@@ -1,9 +1,13 @@
 var twitter = require('twitter')
-  , env = require('./env.js')
   , fs = require('fs')
   , mongojs = require('mongojs')
 
 var db = mongojs.connect('tweets', ['talkpay'])
+
+// If undefined in our process
+if(!process.env.CONSUMER_KEY) {
+  var env = require('./env.js')
+}
 
 var client = new twitter({
     consumer_key: process.env.CONSUMER_KEY,
