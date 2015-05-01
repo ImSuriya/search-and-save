@@ -2,7 +2,7 @@ var twitter = require('twitter')
   , fs = require('fs')
   , mongojs = require('mongojs')
 
-var db = mongojs.connect('tweets', ['talkpay'])
+var db = mongojs.connect(process.env.MONGO_URL +'/tweets', ['talkpay'])
 
 // If undefined in our process
 if(!process.env.CONSUMER_KEY) {
