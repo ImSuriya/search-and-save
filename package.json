@@ -1,5 +1,6 @@
 {
   "name": "tweet-collector",
+  "main": "getTweets.js",
   "dependencies": {
     "mongojs": "^0.18.2",
     "node-twitter-api": "^1.6.0",
