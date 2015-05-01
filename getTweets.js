@@ -1,6 +1,9 @@
 var twitter = require('twitter')
   , env = require('./env.js')
   , fs = require('fs')
+  , mongojs = require('mongojs')
+
+var db = mongojs.connect('tweets', ['talkpay'])
 
 var client = new twitter({
     consumer_key: process.env.CONSUMER_KEY,
@@ -9,30 +12,12 @@ var client = new twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 })
 
-client.get('search/tweets', {q: '#talkpay'}, function(error, tweets, response){
-   console.log(tweets.statuses.length);
-})
-
 client.stream('statuses/filter', {track: '#talkpay'}, function(stream) {
     stream.on('data', function(tweet) {
-      var retweet = false
-      if(tweet.retweeted_status) {
-        retweet = true
-      }
-      var text = [tweet.id,
-                  tweet.text,
-                  tweet.geo,
-                  retweet].join('\t')
-      text = text + '\n'
-      console.log(text)
-      fs.writeFile("data/tweets.csv", text, {encoding: 'utf8', flag: 'a+'}, function(error) {
-        if (error) {
-          console.error(error)
-        }
-      })
+      db.talkpay.insert(tweet)
     })
 
     stream.on('error', function(err) {
-      throw(err)
+      console.log(err)
     })
 })
