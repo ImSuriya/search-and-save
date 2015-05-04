@@ -2,12 +2,14 @@ var twitter = require('twitter')
   , fs = require('fs')
   , mongojs = require('mongojs')
 
+// Config
 var connectionString = process.env.MONGO_URL ? process.env.MONGO_URL +'/tweets' : 'tweets'
-var collectionName = 'talkpay'
+  , collectionName = 'talkpay'
+  , hashtag = '#talkpay'
 
 var db = mongojs.connect(connectionString, [collectionName])
 
-// If undefined in our process
+// If undefined in our process load our local file
 // (i.e. we aren't on an external server where we set these differently)
 if(!process.env.CONSUMER_KEY) {
   var env = require('./env.js')
@@ -20,7 +22,7 @@ var client = new twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 })
 
-client.stream('statuses/filter', {track: '#talkpay'}, function(stream) {
+client.stream('statuses/filter', {track: hashtag}, function(stream) {
     stream.on('data', function(tweet) {
       db.talkpay.insert(tweet)
     })
