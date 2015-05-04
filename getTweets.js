@@ -2,9 +2,13 @@ var twitter = require('twitter')
   , fs = require('fs')
   , mongojs = require('mongojs')
 
-var db = mongojs.connect(process.env.MONGO_URL +'/tweets', ['talkpay'])
+var connectionString = process.env.MONGO_URL ? process.env.MONGO_URL +'/tweets' : 'tweets'
+var collectionName = 'talkpay'
+
+var db = mongojs.connect(connectionString, [collectionName])
 
 // If undefined in our process
+// (i.e. we aren't on an external server where we set these differently)
 if(!process.env.CONSUMER_KEY) {
   var env = require('./env.js')
 }
