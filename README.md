@@ -4,8 +4,10 @@ This project opens the Twitter API stream and saves each tweet into a
 mongo database as the data comes in. N.B. this is not ALL tweets, but a
 sample, as per the Twitter API.
 
-The data in the database began collection on May 1 at 1:43pm, and ended
+The data in the database dump began collection on May 1 at 1:43pm, and ended
 May 4 at 10am. It contains >26k records containing the #talkpay hashtag.
+
+This project is forked from and based on tweet-collector.
 
 ## Usage
 
