@@ -1,4 +1,4 @@
-# Scrape and Save
+# Search and Save
 
 This project opens the Twitter API stream and saves each tweet into a
 mongo database as the data comes in. N.B. this is not ALL tweets, but a
