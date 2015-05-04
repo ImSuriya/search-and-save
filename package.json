@@ -1,9 +1,9 @@
 {
-  "name": "tweet-collector",
+  "name": "share-and-save",
+  "private": true,
   "main": "getTweets.js",
   "dependencies": {
     "mongojs": "^0.18.2",
-    "node-twitter-api": "^1.6.0",
     "twitter": "^1.2.5"
   }
 }
